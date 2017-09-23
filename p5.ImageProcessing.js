@@ -1,4 +1,22 @@
-p5.prototype.rgb2gray = function (img) {
+
+/**
+ *
+ * rgbToGray is a method that convert p5.Image object to a
+ * object that has properties of graysclae image
+ * 
+ * @method rgbToGray
+ * @param  {p5.Image} 
+ *                    
+ * @return {Object {pixels: height: width:}}
+ * 
+ * @example
+ * 
+ * @alt
+ * no display.
+ *
+ */
+
+p5.prototype.rgbToGray= function (img) {
   
   if(!(img instanceof p5.Image)){
       throw "TypeError";
@@ -14,8 +32,28 @@ p5.prototype.rgb2gray = function (img) {
   return {pixels:gray, width:img.width, height: img.height};
 }
 
-p5.prototype.displaygray= function(gray){
-        
+/**
+ *
+ * displyGray is the function used to displatan image on a canvas.
+ * canvas automatically get the size of the given gray image.
+ * 
+ * @method displayGray
+ * @param  {Object {pixels: height: width:}} 
+ *                    
+ * @return {}
+ * 
+ * @example
+ * 
+ * @alt
+ * no display.
+ *
+ */
+
+p5.prototype.displayGray= function(gray){
+    
+    createCanvas(gray.width,gray.height);
+    background(0);
+    
     if (!gray.hasOwnProperty('pixels')  || !gray.hasOwnProperty('width') || !gray.hasOwnProperty('height')){
         throw "TypeError";
     }
@@ -28,6 +66,25 @@ p5.prototype.displaygray= function(gray){
       }
      }
 }
+
+/**
+ *
+ *threshold function threshold a given image. The tvalue parameter 
+ *should be in between 0 to 255
+ * 
+ * @method threshold
+ * @param  {tvalue} //Threshold value
+ * @param  {Object {pixels: height: width:}} //Object that contain gray image 
+ *                    
+ * @return {Object {pixels: height: width:}} //Return a gray image
+ * 
+ * @example
+ * 
+ * @alt
+ * no display.
+ *
+ */
+
 
 p5.prototype.threshold=function(tvalue, image){
     
@@ -47,6 +104,23 @@ p5.prototype.threshold=function(tvalue, image){
   }
   return {pixels:threshold, width:image.width, height: image.height};
 }
+
+/**
+ *
+ *threshold function threshold a given image. The tvalue parameter 
+ *should be in between 0 to 255
+ * 
+ * @method invert
+ * @param  {Object {pixels: height: width:}} //Object that contain gray image 
+ *                    
+ * @return {Object {pixels: height: width:}} //Return a gray image
+ * 
+ * @example
+ * 
+ * @alt
+ * no display.
+ *
+ */
 
 p5.prototype.invert=function(image){
     
