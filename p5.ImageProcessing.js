@@ -23,8 +23,7 @@ p5.prototype.displaygray= function(gray){
      
      for(var x=0; x<gray.width; x++){
       for(var y=0; y< gray.height; y++){
-           stroke(gray.pixels[y*gray.width+x]);
-           
+           stroke(gray.pixels[y*gray.width+x]);          
            point(x,y);
       }
      }
@@ -98,5 +97,27 @@ p5.prototype.powerlawtransform=function(image,gamma,c){
 }
 
 
+p5.prototype.rotate=function(image,x0,y0,ang){
+    
+  if (!image.hasOwnProperty('pixels')  || ! image.hasOwnProperty('width') || !image.hasOwnProperty('height')){
+      throw "TypeError";
+  } 
+  
+  var rotate=new Array();
+  for(var x=0 ; x < image.pixels.length; x++){
+      rotate.push(0);
+  }
 
+  for(var x=0;x<image.height; x++){
+      for(var y=0;y<image.width; y++){
+          
+          var xn=Math.round(Math.cos(ang)*(x-x0) - Math.sin(ang)*(y-y0) + x0);
+          var yn=Math.round(Math.sin(ang)*(x-x0) + Math.cos(ang)*(y-y0) + y0);
+          if (yn < image.width && yn > 0){
+            rotate[xn*image.width+yn]=image.pixels[x*image.width+y];       
+          }
+      }
+  }
 
+  return {pixels:rotate, width:image.width, height: image.height};
+}
