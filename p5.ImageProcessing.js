@@ -38,7 +38,7 @@ p5.prototype.rgbToGray= function (img) {
  * canvas automatically get the size of the given gray image.
  * 
  * @method displayGray
- * @param  {Object {pixels: height: width:}} 
+ * @param  {Object} Object containing  {pixels: height: width:} properties
  *                    
  * @return {}
  * 
@@ -73,10 +73,11 @@ p5.prototype.displayGray= function(gray){
  *should be in between 0 to 255
  * 
  * @method threshold
- * @param  {tvalue} //Threshold value
- * @param  {Object {pixels: height: width:}} //Object that contain gray image 
+ * 
+ * @param  {Number} Threshold value
+ * @param  {Object} Object containing  {pixels: height: width:} properties
  *                    
- * @return {Object {pixels: height: width:}} //Return a gray image
+ * @return {Object} Return a gray image object {pixels: height: width:}
  * 
  * @example
  * 
@@ -107,13 +108,12 @@ p5.prototype.threshold=function(tvalue, image){
 
 /**
  *
- *threshold function threshold a given image. The tvalue parameter 
- *should be in between 0 to 255
+ * Return the invert of agiven image
  * 
  * @method invert
- * @param  {Object {pixels: height: width:}} //Object that contain gray image 
+ * @param  {Object} Object containing  {pixels: height: width:} properties
  *                    
- * @return {Object {pixels: height: width:}} //Return a gray image
+ * @return {Object} Return a gray image object {pixels: height: width:}
  * 
  * @example
  * 
@@ -134,19 +134,25 @@ p5.prototype.invert=function(image){
   return {pixels:invert, width:image.width, height: image.height};
 }
 
-p5.prototype.invert=function(image){
-    
-  if (!image.hasOwnProperty('pixels')  || ! image.hasOwnProperty('width') || !image.hasOwnProperty('height')){
-      throw "TypeError";
-  }    
-  var invert=new Array();
-  for(var x=0 ; x < image.pixels.length; x++){
-      invert.push(255-image.pixels[x]);
-  }
-  return {pixels:invert, width:image.width, height: image.height};
-}
+/**
+ *
+ * Log transform the image 
+ *
+ * @method logTransform
+ * @param  {Object} Object containing  {pixels: height: width:} properties
+ * @param  {Number} The scaling factor of the resulting image default value :2
+ *                                       
+ * @return {Object} Return a gray image object {pixels: height: width:}
+ * 
+ * @example
+ * 
+ * @alt
+ * no display.
+ *
+ */
 
-p5.prototype.logtransform=function(image,c){
+
+p5.prototype.logTransform=function(image,c=2){
     
   if (!image.hasOwnProperty('pixels')  || ! image.hasOwnProperty('width') || !image.hasOwnProperty('height')){
       throw "TypeError";
@@ -158,7 +164,26 @@ p5.prototype.logtransform=function(image,c){
   return {pixels:logtransform, width:image.width, height: image.height};
 }
 
-p5.prototype.powerlawtransform=function(image,gamma,c){
+/**
+ *
+ * Take the power low transform of the image
+ *
+ * @method powerLowTransform
+ * @param  {Object} Object containing  {pixels: height: width:} properties
+ * 
+ * @param  {Number} Power value of the image (usually less than zero ) 
+ * @param  {Number} The scaling factor of the resulting image default value :1
+ *                                       
+ * @return {Object} Return a gray image object {pixels: height: width:}
+ * 
+ * @example
+ * 
+ * @alt
+ * no display.
+ *
+ */
+
+p5.prototype.powerLowTransform=function(image,gamma,c=1){
     
   if (!image.hasOwnProperty('pixels')  || ! image.hasOwnProperty('width') || !image.hasOwnProperty('height')){
       throw "TypeError";
@@ -170,8 +195,28 @@ p5.prototype.powerlawtransform=function(image,gamma,c){
   return {pixels:logtransform, width:image.width, height: image.height};
 }
 
+/**
+ *
+ * Rotate a given image.
+ * 
+ * @method rotate
+ * @param  {Object} Object containing  {pixels: height: width:} properties
+ * 
+ * @param  {Number} Base point of rotation x0 default: h/2
+ * @param  {Number} Base point of rotation y0 default: w/2
+ * @param  {Number} Rotation angle in radians 
+ *                                       
+ * @return {Object} Return a gray image object {pixels: height: width:}
+ * 
+ * @example
+ * 
+ * @alt
+ * no display.
+ *
+ */
 
-p5.prototype.rotate=function(image,x0,y0,ang){
+
+p5.prototype.rotate=function(image,x0=image.height/2,y0=image.width/2,ang){
     
   if (!image.hasOwnProperty('pixels')  || ! image.hasOwnProperty('width') || !image.hasOwnProperty('height')){
       throw "TypeError";
