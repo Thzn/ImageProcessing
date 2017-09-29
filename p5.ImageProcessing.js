@@ -1,4 +1,14 @@
 
+
+
+/**
+ * 
+ * Image Processing library developed on p5.js 
+ *   
+ *   
+ * */
+
+
 /**
  *
  * rgbToGray is a method that convert p5.Image object to a
@@ -21,7 +31,7 @@ p5.prototype.rgbToGray= function (img) {
   if(!(img instanceof p5.Image)){
       throw "TypeError";
   }
-  
+  //Transform the RGB colour components to Intencity levels
   var gray=new Array();
   img.loadPixels();
   for (var x = 0; x < 4 * (img.width*img.height); x+=4) {
@@ -53,12 +63,12 @@ p5.prototype.displayGray= function(gray){
     
     createCanvas(gray.width,gray.height);
     background(0);
-    
+    // Check for errors in the code
     if (!gray.hasOwnProperty('pixels')  || !gray.hasOwnProperty('width') || !gray.hasOwnProperty('height')){
         throw "TypeError";
     }
      console.log(gray.pixels.length);
-     
+    // Draw the image on the specified canvas
      for(var x=0; x<gray.width; x++){
       for(var y=0; y< gray.height; y++){
            stroke(gray.pixels[y*gray.width+x]);          
@@ -88,13 +98,14 @@ p5.prototype.displayGray= function(gray){
 
 
 p5.prototype.threshold=function(tvalue, image){
-    
+  
+  // Check for the threshold value range and correct image object  
   if(tvalue > 255 || tvalue < 0){
       throw "ValueError";
   }else if (!image.hasOwnProperty('pixels')  || ! image.hasOwnProperty('width') || !image.hasOwnProperty('height')){
       throw "TypeError";
   }    
-  
+  // Assign colour levels to the array
   var threshold=new Array();
   for(var x=0 ; x < image.pixels.length; x++){
       if(image.pixels[x] > tvalue){
@@ -126,7 +137,8 @@ p5.prototype.invert=function(image){
     
   if (!image.hasOwnProperty('pixels')  || ! image.hasOwnProperty('width') || !image.hasOwnProperty('height')){
       throw "TypeError";
-  }    
+  }
+  // Transform the gray levels in the array Y=255-X
   var invert=new Array();
   for(var x=0 ; x < image.pixels.length; x++){
       invert.push(255-image.pixels[x]);
@@ -156,7 +168,8 @@ p5.prototype.logTransform=function(image,c=2){
     
   if (!image.hasOwnProperty('pixels')  || ! image.hasOwnProperty('width') || !image.hasOwnProperty('height')){
       throw "TypeError";
-  }    
+  }
+  // Transform the gray levels in the array Y=c(log(X+1))
   var logtransform=new Array();
   for(var x=0 ; x < image.pixels.length; x++){
       logtransform.push(c*(Math.log(image.pixels[x]+1)));
@@ -187,7 +200,8 @@ p5.prototype.powerLowTransform=function(image,gamma,c=1){
     
   if (!image.hasOwnProperty('pixels')  || ! image.hasOwnProperty('width') || !image.hasOwnProperty('height')){
       throw "TypeError";
-  }    
+  }
+  //Transform the gray levles in the array Y=cX^gamma
   var logtransform=new Array();
   for(var x=0 ; x < image.pixels.length; x++){
       logtransform.push(c*(Math.pow(image.pixels[x],gamma)));
@@ -226,7 +240,9 @@ p5.prototype.rotate=function(image,x0=image.height/2,y0=image.width/2,ang){
   for(var x=0 ; x < image.pixels.length; x++){
       rotate.push(0);
   }
-
+  
+  //Transrom the image using transfer function
+  
   for(var x=0;x<image.height; x++){
       for(var y=0;y<image.width; y++){
           
@@ -239,4 +255,19 @@ p5.prototype.rotate=function(image,x0=image.height/2,y0=image.width/2,ang){
   }
 
   return {pixels:rotate, width:image.width, height: image.height};
+}
+
+
+p5.prototype.medianFilter=function(image,kernel){
+    
+  if (!image.hasOwnProperty('pixels')  || ! image.hasOwnProperty('width') || !image.hasOwnProperty('height')){
+      throw "TypeError";
+  }
+  //Transform the gray levles in the array Y=cX^gamma
+  var median=new Array();
+  
+  
+  
+  
+  return {pixels:median, width:image.width, height: image.height};
 }
