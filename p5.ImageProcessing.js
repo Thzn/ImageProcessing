@@ -271,3 +271,49 @@ p5.prototype.medianFilter=function(image,kernel){
   
   return {pixels:median, width:image.width, height: image.height};
 }
+
+/**
+ *
+ * Edge detection using first order derivative.
+ * 
+ * @method edge
+ * @param  {Object} Object containing  {pixels: height: width:} properties
+ *                                       
+ * @return {Object} Return a edge detected image object {pixels: height: width:}
+ * 
+ * @example
+ * 
+ * @alt
+ * no display.
+ *
+ */
+
+
+p5.prototype.edge=function(newim){
+    
+  if (!newim.hasOwnProperty('pixels')  || ! newim.hasOwnProperty('width') || !newim.hasOwnProperty('height')){
+      throw "TypeError";
+  }
+    
+  var gray=new Array();
+  gray.push(0);
+  for(var x=1;x < newim.pixels.length;x++){
+      var diffr=abs(newim.pixels[x]-newim.pixels[x-1]);
+      if(diffr> 50){
+        gray.push(255);
+      }else{
+        gray.push(0);
+      }  
+  }
+  
+  return {pixels:gray, width:newim.width, height: newim.height};
+}
+
+
+
+
+
+
+
+
+
